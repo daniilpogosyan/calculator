@@ -22,7 +22,6 @@
 
 #keyboard {
   margin: 10px;
-  border: 1px solid red;
   flex: 1;
   display: flex;
   flex-wrap: wrap;
@@ -69,15 +68,21 @@ button {
 }
 
 
-.number {
+.number,
+#dot,
+#equal {
   background-color: #f5f5f5;
   color: #333333;
 }
-.number:hover {
+.number:hover,
+#dot:hover,
+#equal:hover {
   background-color: #a0a0a0;
   color: #222222;
 }
-.number:active {
+.number:active,
+#dot:active,
+#equal:active {
   background-color:#8f8f8f;
   color: #111111;
 }
