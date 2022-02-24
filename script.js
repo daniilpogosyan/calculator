@@ -15,17 +15,24 @@ const expression = {
   // used to clear display after getting operator
   numberEntered: false,
 
+  precision: 8,
   operate() {
+    let result;
     switch (this.operator) {
       case '+':
-        return +this.num1 + +this.num2;
+        result =  +this.num1 + +this.num2;
+        break;
       case '-':
-        return this.num1 - this.num2;
+        result =  this.num1 - this.num2;
+        break;
       case '*':
-        return this.num1 * this.num2;
+        result =  this.num1 * this.num2;
+        break;
       case '/':
-        return this.num1 / this.num2;
+        result =  this.num1 / this.num2;
+        break;
     }
+    return Math.round(result * Math.pow(10,this.precision)) / Math.pow(10,this.precision);
   },
 };
 
@@ -39,7 +46,7 @@ clearAll.addEventListener('click', () => {
 
 backspace.addEventListener('click', () => {
     display.textContent = display.textContent.slice(0,-1);
-    if (display.textContent.length == 0) {
+    if (display.textContent.length == 0 || !expression.operator) {
       display.textContent = '0';
       expression.numberEntered = false;
     }
@@ -49,6 +56,9 @@ backspace.addEventListener('click', () => {
   if (!expression.numberEntered) {
     display.textContent = '';
     expression.numberEntered = true;
+  }
+  if (expression.operator == undefined) {
+    expression.num1 = undefined;
   }
     display.textContent += number.dataset.key;
 }));
@@ -77,5 +87,15 @@ equal.addEventListener('click', () => {
     expression.num2 = undefined;
     expression.operator = undefined;
     expression.numberEntered = false;
+  }
+});
+
+dot.addEventListener('click', () => {
+  if(!expression.numberEntered) {
+    display.textContent = '0';
+  }
+  if (!display.textContent.includes('.')) {
+    expression.numberEntered = true;
+    display.textContent += '.';
   }
 });
