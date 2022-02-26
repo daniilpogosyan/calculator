@@ -10,28 +10,35 @@ const operators = document.getElementsByClassName('operator');
 const equal = document.getElementById('equal');
 
 
-clearAll.addEventListener('click', () => {
+let resultPrinted = false;
+const clearDisplay = () => {
   display.textContent = '0';
+  resultPrinted = false;
+};
+
+clearAll.addEventListener('click', () => {
+  clearDisplay();
 });
 
 backspace.addEventListener('click', () => {
     display.textContent = display.textContent.slice(0,-1);
-    if (display.textContent.length == 0) {
-      display.textContent = '0';
+    if (display.textContent.length == 0 || resultPrinted) {
+      clearDisplay();
     }
 });
 
 [...numbers, ...parenthesis].forEach(number => number.addEventListener('click', () => {
-  if (display.textContent == '0') {
-    display.textContent = '';
-  }
-    display.textContent += number.dataset.key;
+  if (resultPrinted)  clearDisplay();
+  if (display.textContent == '0')  display.textContent = '';
+
+  display.textContent += number.dataset.key;
 }));
 
-[...operators].forEach(operator => operator.addEventListener('click', () => {
-    if(/[\+\-\×\÷]$/.test(display.textContent))
-      display.textContent = display.textContent.slice(0,-1);
-    display.textContent += operator.textContent;
+[...operators].forEach(operator => operator.addEventListener('click', () => {  
+  resultPrinted = false;
+  if(/[\+\-\×\÷]$/.test(display.textContent))
+    display.textContent = display.textContent.slice(0,-1);
+  display.textContent += operator.textContent;
 }));
 
 equal.addEventListener('click', () => {
@@ -80,7 +87,10 @@ function isValid(expression) {
 
 function computeExp(expression) {
 
-  if (!isValid(expression)) return 'ERROR';
+  if (!isValid(expression)) {
+    resultPrinted = true;
+    return 'ERROR';
+  }
 
   //to process expression like `-4+3...' correctly
   //otherwise the first minus would be considered an operator between two operands
@@ -136,6 +146,7 @@ function computeExp(expression) {
         expPriority[operatorIndex + 1],
         expPriority[operatorIndex].operator)); 
   }
+  resultPrinted = true;
   return expPriority[0];
 }
 
