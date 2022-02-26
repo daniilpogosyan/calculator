@@ -37,10 +37,9 @@ button {
 
 
 .clean-button {
-  width: 40%;
+  /* width: 40%; */
   background-color: #ff4949;
   color: #ffffff
-
 }
 .clean-button:hover {
   background-color: #e03f3f;
@@ -50,9 +49,20 @@ button {
 .clean-button:active {
   background-color: #cc3737;
   color: #dddddd;
-
 }
 
+.parenthesis {
+  background-color: #5985fd;
+  color: #ffffff;
+}
+.parenthesis:hover {
+  background-color: #3168ff;
+  color: #eeeeee;
+}
+.parenthesis:active {
+  background-color:#1f5bff;
+  color: #dddddd;
+}
 
 .operator {
   background-color: #ff791f;
