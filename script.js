@@ -29,6 +29,8 @@ backspace.addEventListener('click', () => {
 }));
 
 [...operators].forEach(operator => operator.addEventListener('click', () => {
+    if(/[\+\-\×\÷]$/.test(display.textContent))
+      display.textContent = display.textContent.slice(0,-1);
     display.textContent += operator.textContent;
 }));
 
