@@ -47,6 +47,8 @@ equal.addEventListener('click', () => {
 });
 
 dot.addEventListener('click', () => {
+  if (resultPrinted)  clearDisplay();
+
   //if expression doesn't has no operators 
   //then start search from the expression beginning 
   let lastOpIndex = [...display.textContent.matchAll(/[\+\-\×\÷]/g)].pop()?.index || 0;
@@ -107,25 +109,31 @@ function computeExp(expression) {
   let parenthCounter = 0;
   for (const piece of expArr) {
       switch (piece) {
-        case '(':
+        case '(': {
           parenthCounter++;
           break;
-        case ')':
+        }
+        case ')': {
           parenthCounter--;
           break; 
-        case String(+piece):
-          expPriority.push(piece);
-          break
+        }
         case '+':
         case '-':
         case '×':
-        case '÷':
+        case '÷': {
           const priority = ((piece == '+' || piece == '-')? 1 : 2) + parenthCounter * 3;
           let op = {
             operator: piece,
             priority: priority
-          }
+          };
           expPriority.push(op);
+          break;
+        }
+        default: {
+          number = piece.replace(/^\.|\.$/,'');
+          expPriority.push(number);
+          break
+        }
       }
   }
 
